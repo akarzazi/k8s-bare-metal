@@ -3,7 +3,7 @@ set -eo pipefail
 
 VAGRANT_HOME="/home/vagrant"
 MASTER_IP=`ip -o -4 addr show dev eth0 | sed 's/.* inet \([^/]*\).*/\1/'`
-CONTROL_PLANE="172.21.21.200:6443"
+CONTROL_PLANE="172.16.1.200:6443"
 POD_NW_CIDR="10.244.0.0/16"
 
 CERT_KEY="$(kubeadm alpha certs certificate-key)"

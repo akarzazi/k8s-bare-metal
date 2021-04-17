@@ -4,7 +4,7 @@ set -eo pipefail
 # latest :"5:19.03.8~3-0~ubuntu-bionic"
 export DEBIAN_FRONTEND=noninteractive
 export UCF_FORCE_CONFOLD=1
-apt update
+apt update --fix-missing
 apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -qq -y install  haproxy
 cat > /etc/haproxy/haproxy.cfg <<EOF
 global
@@ -51,7 +51,7 @@ listen stats
     stats uri /stats
 
 frontend kube-api-server
-    bind 172.21.21.200:6443
+    bind 172.16.1.200:6443
     mode tcp
     option tcplog
     use_backend kube-api-server-backend
@@ -61,9 +61,9 @@ backend kube-api-server-backend
    option tcplog
    option tcp-check
    balance roundrobin
-   server kube-0 172.21.21.11:6443 check
-   server kube-1 172.21.21.12:6443 check
-   server kube-2 172.21.21.13:6443 check
+   server kube-0 172.16.1.11:6443 check
+   server kube-1 172.16.1.12:6443 check
+   server kube-2 172.16.1.13:6443 check
 EOF
 
 systemctl restart haproxy

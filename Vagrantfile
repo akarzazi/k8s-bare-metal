@@ -8,16 +8,16 @@ PROVIDER     = "hyperv"
 
 NET_TYPE     = "private_network"
 NET_SWITCH   = "NATSwitch"
-NET_GATEWAY  = "172.21.21.1"
+NET_GATEWAY  = "172.16.1.1"
 NET_MASK_NUM = "24"
 NET_DNS     = "1.1.1.1"
 
-NODE_IP_NW   = "172.21.21."
+NODE_IP_NW   = "172.16.1."
 LB_IP        = "172.21.12.200"
 
-MASTER_COUNT = 3
-NODE_COUNT   = 3
-NFS_STORE    = true
+MASTER_COUNT = 1
+NODE_COUNT   = 1
+NFS_STORE    = false
 HA_PROXY     = true
 
 def configure_base(vm,name,ip)
@@ -52,14 +52,14 @@ Vagrant.configure("2") do |config|
 
   if NFS_STORE
     config.vm.define "nfs-01" do |srv|
-      configure_base(srv.vm,"nfs-01","172.21.21.150")
+      configure_base(srv.vm,"nfs-01","172.16.1.150")
       srv.vm.provision "nfs",  type: "shell", path: "init_nfs.bash", preserve_order: true 
     end
   end
 
   if HA_PROXY
     config.vm.define "lb-01" do |srv|
-      configure_base(srv.vm,"lb-01","172.21.21.200")
+      configure_base(srv.vm,"lb-01","172.16.1.200")
       srv.vm.provision "haproxy", type: "shell", path: "init_haproxy.bash", preserve_order: true 
     end
   end

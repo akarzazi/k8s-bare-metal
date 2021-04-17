@@ -1,5 +1,5 @@
 echo "NFS server script"
-apt-get update
+apt-get update --fix-missing
 sudo DEBIAN_FRONTEND=noninteractive apt-get -yq install nfs-kernel-server
 mkdir -p /export/volumes/pod
 echo '/export/volumes *(rw,no_root_squash,no_subtree_check)' >> /etc/exports

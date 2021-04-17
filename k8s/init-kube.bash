@@ -1,6 +1,7 @@
 #!/bin/bash
 set -eo pipefail
 
+apt-get update --fix-missing
 
 DOCKER_VER="5:19.03.10~3-0~ubuntu-focal"
 KUBE_VER="1.19.2"
@@ -58,7 +59,7 @@ echo "[TASK 6] Add apt k8s repo"
 }
 
 echo "[TASK 7] Install Kubernetes components"
-apt update && apt install -y \
+apt update --fix-missing && apt install -y \
               kubeadm=$KUBE_VER-00 \
               kubelet=$KUBE_VER-00 \
               kubectl=$KUBE_VER-00
